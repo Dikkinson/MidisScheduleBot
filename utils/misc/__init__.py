@@ -3,3 +3,4 @@ from . import logging
 from . import parser
 from . import weeks
 from . import SORT
+from . import schedule_creator

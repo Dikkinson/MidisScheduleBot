@@ -1,1 +1,2 @@
 from .study_years_keyboard import study_years_markup
+from .study_years_keyboard import other_study_years_markup

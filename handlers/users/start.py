@@ -9,8 +9,7 @@ from keyboards.inline.callback_datas import study_year_callback
 from loader import rasp
 from datetime import datetime, timedelta
 
-from utils.misc import rate_limit
-from utils.misc.weeks import days, get_week
+from states import User_form
 import emoji
 
 
@@ -37,6 +36,8 @@ async def bot_start(message: Message, state: FSMContext):
 
 @dp.callback_query_handler(study_year_callback.filter(button_func="study_year"), state='*')
 async def selected_study_year(call: CallbackQuery, callback_data: dict):
+    # Ставим стейт выбора группы юзера
+    await User_form.user_group.set()
     await call.answer(cache_time=0)
     await call.message.answer(emoji.emojize(f"Выбран {callback_data.get('number')} курс\n"
                                             f"Теперь выбери свою группу :book:", use_aliases=True),
@@ -47,40 +48,3 @@ async def selected_study_year(call: CallbackQuery, callback_data: dict):
 async def select_group(message: Message, state: FSMContext):
     await state.update_data(user_group=message.text)
     await rasp_today(message, state)
-
-
-@dp.message_handler(text="Сегодня", state='*')
-@rate_limit(2)
-async def rasp_today(message: Message, state: FSMContext):
-    async with state.proxy() as data:
-        try:
-            await message.answer(f"Расписание на сегодня:\n\n"
-                                 f"{rasp[get_week()][data['user_group']][datetime.today().weekday()]}", reply_markup=user_markup)
-        except KeyError:
-            await message.answer(emoji.emojize("Сегодня пар нет :tada:", use_aliases=True), reply_markup=user_markup)
-
-
-@dp.message_handler(text="Завтра", state='*')
-@rate_limit(2)
-async def rasp_tomorrow(message: Message, state: FSMContext):
-    async with state.proxy() as data:
-        try:
-            tomorrow = datetime.today() + timedelta(days=1)
-            await message.answer(f"Расписание на завтра:\n\n"
-                                 f"{rasp[get_week()][data['user_group']][tomorrow.weekday()]}", reply_markup=user_markup)
-        except KeyError:
-            await message.answer(emoji.emojize("Завтра пар нет :tada:", use_aliases=True), reply_markup=user_markup)
-
-
-@dp.message_handler(text="Первая неделя", state='*')
-# @rate_limit(2)
-async def rasp_tomorrow(message: Message, state: FSMContext):
-    async with state.proxy() as data:
-        await message.answer(text=create_rasp_text(0, data['user_group']))
-
-
-@dp.message_handler(text="Вторая неделя", state='*')
-# @rate_limit(2)
-async def rasp_tomorrow(message: Message, state: FSMContext):
-    async with state.proxy() as data:
-        await message.answer(text=create_rasp_text(1, data['user_group']))

@@ -15,3 +15,16 @@ study_years_markup = InlineKeyboardMarkup(
     ],
     resize_keyboard=True
 )
+
+other_study_years_markup = InlineKeyboardMarkup(
+    inline_keyboard=
+    [
+        [
+            InlineKeyboardButton(text=emoji.emojize(":one:", use_aliases=True), callback_data="study_year:other_study_year:1"),
+            InlineKeyboardButton(text=emoji.emojize(":two:", use_aliases=True), callback_data="study_year:other_study_year:2"),
+            InlineKeyboardButton(text=emoji.emojize(":three:", use_aliases=True), callback_data="study_year:other_study_year:3"),
+            InlineKeyboardButton(text=emoji.emojize(":four:", use_aliases=True), callback_data="study_year:other_study_year:4")
+        ]
+    ],
+    resize_keyboard=True
+)

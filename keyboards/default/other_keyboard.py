@@ -1,6 +1,6 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
-user_markup = ReplyKeyboardMarkup(
+other_markup = ReplyKeyboardMarkup(
     keyboard=[
         [
             KeyboardButton(text="❗️Сегодня"),
@@ -11,7 +11,7 @@ user_markup = ReplyKeyboardMarkup(
             KeyboardButton(text="2️⃣ неделя")
         ],
         [
-            KeyboardButton(text="👨‍👧‍👦Расписание других групп")
+            KeyboardButton(text="👨‍🎓 Вернуться к своему расписанию")
         ]
     ],
     resize_keyboard=True
