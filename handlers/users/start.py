@@ -1,5 +1,4 @@
 from aiogram.dispatcher import FSMContext
-from keyboards.default import user_markup
 from loader import dp
 from aiogram.types import Message, CallbackQuery
 from aiogram.dispatcher.filters.builtin import CommandStart
@@ -7,27 +6,16 @@ from keyboards.default.groups_keybard import select_groups_to_show
 from keyboards.inline import study_years_markup
 from keyboards.inline.callback_datas import study_year_callback
 from loader import rasp
-from datetime import datetime, timedelta
+from handlers.users.user_schedule import rasp_today
 
 from states import User_form
 import emoji
 
 
-def create_rasp_text(week: int, group_name: str):
-    text = f"Расписание на {'вторую' if week else 'первую'} неделю {group_name}:\n\n"
-    for day in rasp[week][group_name]:
-        text += f"<i>{days[day]}</i>\n"
-        try:
-            text += f"{rasp[week][group_name][day]}\n"
-        except KeyError:
-            pass
-    return text
-
-
 @dp.message_handler(CommandStart(), state='*')
 async def bot_start(message: Message, state: FSMContext):
-    async with state.proxy() as data:
-        data['user_id'] = message.chat.id
+    # Ставим стейт выбора курса юзера
+    await User_form.user_study_year.set()
     await message.answer(emoji.emojize(f"Привет, {message.from_user.first_name} :hand:\n"
                                        f"Я бот МИДиС помогу узнать твоё расписание :calendar:\n"
                                        f"Для начала, на каком курсе ты учишься? :mortar_board:", use_aliases=True),
@@ -44,7 +32,7 @@ async def selected_study_year(call: CallbackQuery, callback_data: dict):
                               reply_markup=select_groups_to_show(callback_data.get("number")))
 
 
-@dp.message_handler(text=rasp[0].keys(), state='*')
+@dp.message_handler(text=rasp[0].keys(), state=User_form.user_group)
 async def select_group(message: Message, state: FSMContext):
     await state.update_data(user_group=message.text)
     await rasp_today(message, state)
