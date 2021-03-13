@@ -41,9 +41,8 @@ class Parser:
             # Проходим по всем дням
             for i, day in enumerate(self.rasp[key]):
                 # Если нет пары в первую неделю, или вообще нет пары
-                #if not any(day.iloc[:, 0]):
+                # if not any(day.iloc[:, 0]):
                 #    continue
-
                 # Проходимся по всем парам(Первая неделя)
                 for num_para in range(0, day.shape[0], 2):
                     para = day.iloc[num_para:num_para + 2, :]

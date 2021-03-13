@@ -15,7 +15,7 @@ import emoji
 
 
 @dp.message_handler(text="❗️Сегодня", state=User_form.user_group)
-@rate_limit(2)
+@rate_limit(0.5)
 async def rasp_today(message: Message, state: FSMContext):
     async with state.proxy() as data:
         try:
@@ -27,7 +27,7 @@ async def rasp_today(message: Message, state: FSMContext):
 
 
 @dp.message_handler(text="❕Завтра", state=User_form.user_group)
-@rate_limit(2)
+@rate_limit(0.5)
 async def rasp_tomorrow(message: Message, state: FSMContext):
     async with state.proxy() as data:
         try:
@@ -39,21 +39,21 @@ async def rasp_tomorrow(message: Message, state: FSMContext):
 
 
 @dp.message_handler(text="1️⃣ неделя", state=User_form.user_group)
-@rate_limit(2)
+@rate_limit(0.5)
 async def rasp_first_week(message: Message, state: FSMContext):
     async with state.proxy() as data:
         await message.answer(text=create_rasp_text(0, data['user_group'], rasp))
 
 
 @dp.message_handler(text="2️⃣ неделя", state=User_form.user_group)
-@rate_limit(2)
+@rate_limit(0.5)
 async def rasp_second_week(message: Message, state: FSMContext):
     async with state.proxy() as data:
         await message.answer(text=create_rasp_text(1, data['user_group'], rasp))
 
 
 @dp.message_handler(text="👨‍👧‍👦Расписание других групп", state=User_form.user_group)
-@rate_limit(2)
+@rate_limit(0.5)
 async def rasp_other_group(message: Message):
     await User_form.other_study_year.set()
     await message.answer(emoji.emojize(f"Выбери курс группы, у которой ты хочешь посмотреть расписание :mortar_board:", use_aliases=True),

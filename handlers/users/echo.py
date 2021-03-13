@@ -14,7 +14,7 @@ async def bot_echo(message: types.Message):
 
 
 @dp.message_handler(state='*')
-@rate_limit(2)
+@rate_limit(1)
 async def bot_echo(message: types.Message):
     await message.answer(emoji.emojize(f"Я не понял что ты написал :pensive:\n"
                                        f"Если что, напиши /help", use_aliases=True))

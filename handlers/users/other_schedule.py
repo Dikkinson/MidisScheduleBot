@@ -15,6 +15,7 @@ import emoji
 
 
 @dp.callback_query_handler(study_year_callback.filter(button_func="other_study_year"), state='*')
+@rate_limit(0.5)
 async def other_selected_study_year(call: CallbackQuery, callback_data: dict):
     # Ставим стейт выбора группы юзера
     await User_form.other_group.set()
@@ -25,13 +26,14 @@ async def other_selected_study_year(call: CallbackQuery, callback_data: dict):
 
 
 @dp.message_handler(text=rasp[0].keys(), state=User_form.other_group)
+@rate_limit(0.5)
 async def other_select_group(message: Message, state: FSMContext):
     await state.update_data(other_group=message.text)
     await other_rasp_today(message, state)
 
 
 @dp.message_handler(text="❗️Сегодня", state=User_form.other_group)
-@rate_limit(2)
+@rate_limit(0.5)
 async def other_rasp_today(message: Message, state: FSMContext):
     async with state.proxy() as data:
         try:
@@ -42,7 +44,7 @@ async def other_rasp_today(message: Message, state: FSMContext):
 
 
 @dp.message_handler(text="❕Завтра", state=User_form.other_group)
-@rate_limit(2)
+@rate_limit(0.5)
 async def other_rasp_tomorrow(message: Message, state: FSMContext):
     async with state.proxy() as data:
         try:
@@ -54,21 +56,21 @@ async def other_rasp_tomorrow(message: Message, state: FSMContext):
 
 
 @dp.message_handler(text="1️⃣ неделя", state=User_form.other_group)
-@rate_limit(2)
+@rate_limit(0.5)
 async def other_rasp_first_week(message: Message, state: FSMContext):
     async with state.proxy() as data:
         await message.answer(text=create_rasp_text(0, data['other_group'], rasp))
 
 
 @dp.message_handler(text="2️⃣ неделя", state=User_form.other_group)
-@rate_limit(2)
+@rate_limit(0.5)
 async def other_rasp_second_week(message: Message, state: FSMContext):
     async with state.proxy() as data:
         await message.answer(text=create_rasp_text(1, data['other_group'], rasp))
 
 
 @dp.message_handler(text="👨‍🎓 Вернуться к своему расписанию", state=User_form.other_group)
-@rate_limit(2)
+@rate_limit(0.5)
 async def back_user_group(message: Message, state: FSMContext):
     await User_form.user_group.set()
     await rasp_today(message, state)
