@@ -14,7 +14,7 @@ class Logs(MysqlConnection):
         return r
 
     @staticmethod
-    async def log(chat: types.Chat, message: types.Message):
+    async def log_message(message: types.Message):
         sql = 'INSERT INTO `Logs` (`user_id`, `action`, `time`) VALUES (%s, %s, NOW())'
-        params = (chat.id, message.text)
+        params = (message.from_user.id, message.text)
         await Logs._make_request(sql, params)
