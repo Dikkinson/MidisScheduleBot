@@ -24,3 +24,11 @@ class Users(MysqlConnection):
             sql = 'INSERT INTO `Users_info` (`user_id`, `username`) VALUES (%s, %s)'
             params = (user.id, user.username)
         await Users._make_request(sql, params)
+
+    @staticmethod
+    async def is_sub(user: types.User) -> bool:
+        """Возвращает тру, если юзер подписался на рассылку"""
+        sql = 'SELECT `subcribed` FROM `Users_info` WHERE `user_id` = %s'
+        params = (user.id,)
+        r = await Users._make_request(sql, params, fetch=True)
+        return bool(r)
