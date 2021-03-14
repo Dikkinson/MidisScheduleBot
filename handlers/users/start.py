@@ -16,7 +16,7 @@ import emoji
 
 @dp.message_handler(CommandStart(), state='*')
 @rate_limit(0.5)
-async def bot_start(message: Message, state: FSMContext):
+async def bot_start(message: Message):
     # Ставим стейт выбора курса юзера
     await User_form.user_study_year.set()
     await message.answer(emoji.emojize(f"Привет, {message.from_user.first_name} :hand:\n"

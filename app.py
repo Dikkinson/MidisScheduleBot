@@ -1,8 +1,12 @@
 from aiogram import executor
+import middlewares, filters, handlers
 from loader import dp, scheduler, rasp
 from utils.notify_admins import on_startup_notify, on_shutdown_notify
+from middlewares.throttling import ThrottlingMiddleware
 from datetime import datetime, timedelta
 from utils.notify_subscribers import broadcaster
+
+
 
 
 async def on_startup(dispatcher):

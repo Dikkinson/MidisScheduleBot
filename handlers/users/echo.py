@@ -9,9 +9,8 @@ import emoji
 
 from utils.misc import rate_limit
 
-
 @dp.message_handler(text="/sub", state='*')
-@rate_limit(0.5)
+@rate_limit(1)
 async def user_switch_sub(message: types.Message):
     if await Users.is_sub(message.from_user):
         await message.answer(f"Ты отписался от расслыки 💔\n"
@@ -22,9 +21,8 @@ async def user_switch_sub(message: types.Message):
     await Users.switch_sub(message.from_user)
 
 
-
 @dp.message_handler(text="📆 Какая сейчас неделя?", state='*')
-@rate_limit(0.5)
+@rate_limit(1)
 async def bot_echo(message: types.Message):
     await message.answer(f"Сейчас {'Вторая' if get_week() else 'Первая'} неделя")
 
@@ -35,7 +33,7 @@ async def bot_echo(message: types.Message):
 
 
 @dp.message_handler(state='*')
-@rate_limit(0.5)
+@rate_limit(1)
 async def bot_echo(message: types.Message):
     await message.answer(emoji.emojize(f"Я не понял что ты написал :pensive:\n"
                                        f"Если что, напиши /help", use_aliases=True))

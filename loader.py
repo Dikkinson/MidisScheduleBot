@@ -3,6 +3,9 @@ from aiogram.contrib.fsm_storage.redis import RedisStorage
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from data import config
 from utils.misc.parser import Parser
+import logging
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
 
 parser = Parser('Расписание на 11.03.21.xlsx')
 rasp = parser.get_rasp()
