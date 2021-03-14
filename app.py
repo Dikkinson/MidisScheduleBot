@@ -6,6 +6,11 @@ from utils.notify_subscribers import broadcaster
 
 
 async def on_startup(dispatcher):
+    scheduler.add_job(
+        broadcaster, args=(dp, rasp), trigger='interval', hours=24,
+        next_run_time=datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(hours=8)
+    )
+    scheduler.start()
     # Уведомляет про запуск
     await on_startup_notify(dispatcher)
 

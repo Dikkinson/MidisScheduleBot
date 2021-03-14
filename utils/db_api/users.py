@@ -1,5 +1,3 @@
-from typing import Union
-
 from aiogram import types
 
 from .storages import MysqlConnection
@@ -21,7 +19,7 @@ class Users(MysqlConnection):
             sql = 'UPDATE `Users_info` SET `username` = %s WHERE `user_id` = %s'
             params = (user.username, user.id)
         else:
-            sql = 'INSERT INTO `Users_info` (`user_id`, `username`) VALUES (%s, %s)'
+            sql = 'INSERT INTO `Users_info` (`user_id`, `subscribed`, `username`) VALUES (%s, 0, %s)'
             params = (user.id, user.username)
         await Users._make_request(sql, params)
 
@@ -31,7 +29,7 @@ class Users(MysqlConnection):
         sql = 'SELECT `subscribed` FROM `Users_info` WHERE `user_id` = %s'
         params = (user.id,)
         r = await Users._make_request(sql, params, fetch=True)
-        return bool(r)
+        return bool(r['subscribed'])
 
     @staticmethod
     async def get_sub() -> list:
