@@ -55,18 +55,18 @@ async def other_rasp_tomorrow(message: Message, state: FSMContext):
             await message.answer("Завтра пар нет 🥳")
 
 
-@dp.message_handler(text="1️⃣ неделя", state=User_form.other_group)
+@dp.message_handler(text="▶️ Текущая неделя", state=User_form.other_group)
 @rate_limit(0.5)
 async def other_rasp_first_week(message: Message, state: FSMContext):
     async with state.proxy() as data:
-        await message.answer(text=create_rasp_text(0, data['other_group'], rasp))
+        await message.answer(text=create_rasp_text(get_week(), data['other_group'], rasp))
 
 
-@dp.message_handler(text="2️⃣ неделя", state=User_form.other_group)
+@dp.message_handler(text="⏩ Следующая неделя", state=User_form.other_group)
 @rate_limit(0.5)
 async def other_rasp_second_week(message: Message, state: FSMContext):
     async with state.proxy() as data:
-        await message.answer(text=create_rasp_text(1, data['other_group'], rasp))
+        await message.answer(text=create_rasp_text(int(not get_week()), data['other_group'], rasp))
 
 
 @dp.message_handler(text="👨‍🎓 Вернуться к своему расписанию", state=User_form.other_group)

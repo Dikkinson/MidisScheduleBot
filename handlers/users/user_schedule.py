@@ -14,7 +14,7 @@ from keyboards.default.groups_keybard import select_groups_to_show
 import emoji
 
 
-@dp.message_handler(text="❗️Сегодня", state=User_form.user_group)
+@dp.message_handler(text="❗️Сегодня", state=User_form.default_state)
 @rate_limit(0.5)
 async def rasp_today(message: Message, state: FSMContext):
     async with state.proxy() as data:
@@ -26,7 +26,7 @@ async def rasp_today(message: Message, state: FSMContext):
             await message.answer("Сегодня пар нет 🥳", reply_markup=user_markup)
 
 
-@dp.message_handler(text="❕Завтра", state=User_form.user_group)
+@dp.message_handler(text="❕Завтра", state=User_form.default_state)
 @rate_limit(0.5)
 async def rasp_tomorrow(message: Message, state: FSMContext):
     async with state.proxy() as data:
@@ -38,21 +38,21 @@ async def rasp_tomorrow(message: Message, state: FSMContext):
             await message.answer("Завтра пар нет 🥳", reply_markup=user_markup)
 
 
-@dp.message_handler(text="1️⃣ неделя", state=User_form.user_group)
+@dp.message_handler(text="▶️ Текущая неделя", state=User_form.default_state)
 @rate_limit(0.5)
 async def rasp_first_week(message: Message, state: FSMContext):
     async with state.proxy() as data:
-        await message.answer(text=create_rasp_text(0, data['user_group'], rasp))
+        await message.answer(text=create_rasp_text(get_week(), data['user_group'], rasp))
 
 
-@dp.message_handler(text="2️⃣ неделя", state=User_form.user_group)
+@dp.message_handler(text="⏩ Следующая неделя", state=User_form.default_state)
 @rate_limit(0.5)
 async def rasp_second_week(message: Message, state: FSMContext):
     async with state.proxy() as data:
-        await message.answer(text=create_rasp_text(1, data['user_group'], rasp))
+        await message.answer(text=create_rasp_text(int(not get_week()), data['user_group'], rasp))
 
 
-@dp.message_handler(text="👨‍👧‍👦Расписание других групп", state=User_form.user_group)
+@dp.message_handler(text="👨‍👧‍👦Расписание других групп", state=User_form.default_state)
 @rate_limit(0.5)
 async def rasp_other_group(message: Message):
     await User_form.other_study_year.set()

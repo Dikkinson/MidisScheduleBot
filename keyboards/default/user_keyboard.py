@@ -7,11 +7,11 @@ user_markup = ReplyKeyboardMarkup(
             KeyboardButton(text="❕Завтра")
         ],
         [
-            KeyboardButton(text="1️⃣ неделя"),
-            KeyboardButton(text="2️⃣ неделя")
+            KeyboardButton(text="▶️ Текущая неделя"),
+            KeyboardButton(text="⏩ Следующая неделя")
         ],
         [
-            KeyboardButton(text="👨‍👧‍👦Расписание других групп")
+            KeyboardButton(text="👨‍👧‍👦Расписание других групп"),
         ]
     ],
     resize_keyboard=True

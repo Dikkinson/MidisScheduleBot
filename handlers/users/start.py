@@ -7,6 +7,7 @@ from keyboards.inline import study_years_markup
 from keyboards.inline.callback_datas import study_year_callback
 from loader import rasp
 from handlers.users.user_schedule import rasp_today
+from utils.db_api import Users
 from utils.misc import rate_limit
 
 from states import User_form
@@ -39,4 +40,7 @@ async def selected_study_year(call: CallbackQuery, callback_data: dict):
 @rate_limit(0.5)
 async def select_group(message: Message, state: FSMContext):
     await state.update_data(user_group=message.text)
+    await Users.set_group(message.text, message.from_user)
+    await Users.set_sub(message.from_user)
     await rasp_today(message, state)
+    await User_form.default_state.set()
