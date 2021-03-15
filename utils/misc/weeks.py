@@ -27,8 +27,7 @@ weeks = [datetime.strptime('09 01 2020', '%m %d %Y'), datetime.strptime('09 07 2
          datetime.strptime('06 21 2021', '%m %d %Y'), datetime.strptime('06 28 2021', '%m %d %Y')]
 
 
-def get_week():
-    today = datetime.now()
+def get_week(date: datetime):
     for i, day in enumerate(weeks):
-        if today < day:
+        if date < day:
             return (i - 1) % 2

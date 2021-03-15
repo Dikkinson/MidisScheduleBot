@@ -20,7 +20,7 @@ async def rasp_today(message: Message, state: FSMContext):
     async with state.proxy() as data:
         try:
             await message.answer(f"Расписание на сегодня:\n\n"
-                                 f"{rasp[get_week()][data['user_group']][datetime.today().weekday()]}",
+                                 f"{rasp[get_week(datetime.today())][data['user_group']][datetime.today().weekday()]}",
                                  reply_markup=user_markup)
         except KeyError:
             await message.answer("Сегодня пар нет 🥳", reply_markup=user_markup)
@@ -33,7 +33,7 @@ async def rasp_tomorrow(message: Message, state: FSMContext):
         try:
             tomorrow = datetime.today() + timedelta(days=1)
             await message.answer(f"Расписание на завтра:\n\n"
-                                 f"{rasp[get_week()][data['user_group']][tomorrow.weekday()]}", reply_markup=user_markup)
+                                 f"{rasp[get_week(tomorrow)][data['user_group']][tomorrow.weekday()]}", reply_markup=user_markup)
         except KeyError:
             await message.answer("Завтра пар нет 🥳", reply_markup=user_markup)
 
@@ -42,14 +42,14 @@ async def rasp_tomorrow(message: Message, state: FSMContext):
 @rate_limit(0.5)
 async def rasp_first_week(message: Message, state: FSMContext):
     async with state.proxy() as data:
-        await message.answer(text=create_rasp_text(get_week(), data['user_group'], rasp))
+        await message.answer(text=create_rasp_text(get_week(datetime.today()), data['user_group'], rasp))
 
 
 @dp.message_handler(text="⏩ Следующая неделя", state=User_form.default_state)
 @rate_limit(0.5)
 async def rasp_second_week(message: Message, state: FSMContext):
     async with state.proxy() as data:
-        await message.answer(text=create_rasp_text(int(not get_week()), data['user_group'], rasp))
+        await message.answer(text=create_rasp_text(int(not get_week(datetime.today())), data['user_group'], rasp))
 
 
 @dp.message_handler(text="👨‍👧‍👦Расписание других групп", state=User_form.default_state)

@@ -6,6 +6,7 @@ from utils.misc.weeks import get_week
 from loader import dp
 
 import emoji
+from datetime import datetime
 
 from utils.misc import rate_limit
 
@@ -24,7 +25,7 @@ async def user_switch_sub(message: types.Message):
 @dp.message_handler(text="📆 Какая сейчас неделя?", state='*')
 @rate_limit(1)
 async def bot_echo(message: types.Message):
-    await message.answer(f"Сейчас {'Вторая' if get_week() else 'Первая'} неделя")
+    await message.answer(f"Сейчас {'Вторая' if get_week(datetime.today()) else 'Первая'} неделя")
 
 
 @dp.message_handler(text="Пошёл нахуй", state='*')

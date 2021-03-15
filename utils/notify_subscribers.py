@@ -26,7 +26,7 @@ async def broadcaster(dp, rasp) -> int:
             group = await Users.get_group(user['user_id'])
             try:
                 text = f"Расписание на сегодня:\n\n" \
-                       f"{rasp[get_week()][group][datetime.today().weekday()]}\n" \
+                       f"{rasp[get_week(datetime.today())][group][datetime.today().weekday()]}\n" \
                        f"📵 Чтобы отписаться от ежедвневной рассылки /sub"
             except KeyError:
                 text = "Сегодня пар нет 🥳\n" \
