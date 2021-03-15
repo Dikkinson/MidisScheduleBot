@@ -7,8 +7,6 @@ from datetime import datetime, timedelta
 from utils.notify_subscribers import broadcaster
 
 
-
-
 async def on_startup(dispatcher):
     scheduler.add_job(
         broadcaster, args=(dp, rasp), trigger='interval', hours=24,
