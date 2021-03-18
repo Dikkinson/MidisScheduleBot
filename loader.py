@@ -7,7 +7,7 @@ import logging
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 
-parser = Parser('Расписание на 11.03.21.xlsx')
+parser = Parser('rasp.xlsx')
 rasp = parser.get_rasp()
 bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
 # storage = RedisStorage(host='rediska')

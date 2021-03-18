@@ -1,7 +1,7 @@
 from aiogram import executor
 import middlewares, filters, handlers
-from loader import dp, scheduler, rasp
-from utils.notify_admins import on_startup_notify, on_shutdown_notify
+from loader import dp, scheduler, rasp, old_file_id
+from utils.notify_admins import notify_admins_def
 from middlewares.throttling import ThrottlingMiddleware
 from datetime import datetime, timedelta
 from utils.notify_subscribers import broadcaster
@@ -14,13 +14,13 @@ async def on_startup(dispatcher):
     )
     scheduler.start()
     # Уведомляет про запуск
-    await on_startup_notify(dispatcher)
+    await notify_admins_def(dispatcher, "Я запустился")
 
 
 async def on_shutdown(dispatcher):
     await dp.storage.close()
     await dp.storage.wait_closed()
-    await on_shutdown_notify(dispatcher)
+    await notify_admins_def(dispatcher, "Я выключился")
 
 
 if __name__ == '__main__':

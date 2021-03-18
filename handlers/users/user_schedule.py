@@ -39,14 +39,14 @@ async def rasp_tomorrow(message: Message, state: FSMContext):
 
 
 @dp.message_handler(text="▶️ Текущая неделя", state=User_form.default_state)
-@rate_limit(0.5)
+# @rate_limit(0.5)
 async def rasp_first_week(message: Message, state: FSMContext):
     async with state.proxy() as data:
         await message.answer(text=create_rasp_text(get_week(datetime.today()), data['user_group'], rasp))
 
 
 @dp.message_handler(text="⏩ Следующая неделя", state=User_form.default_state)
-@rate_limit(0.5)
+# @rate_limit(0.5)
 async def rasp_second_week(message: Message, state: FSMContext):
     async with state.proxy() as data:
         await message.answer(text=create_rasp_text(int(not get_week(datetime.today())), data['user_group'], rasp))
