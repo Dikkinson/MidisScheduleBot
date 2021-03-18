@@ -5,6 +5,7 @@ from utils.notify_admins import notify_admins_def
 from middlewares.throttling import ThrottlingMiddleware
 from datetime import datetime, timedelta
 from utils.notify_subscribers import broadcaster
+from utils.portal_parser import get_rasp
 
 
 async def on_startup(dispatcher):
@@ -12,6 +13,7 @@ async def on_startup(dispatcher):
         broadcaster, args=(dp, rasp), trigger='interval', hours=24,
         next_run_time=datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(hours=8)
     )
+    scheduler.add_job(get_rasp, args=(rasp, old_file_id, dp), trigger='interval', minutes=1, next_run_time=datetime.now())
     scheduler.start()
     # Уведомляет про запуск
     await notify_admins_def(dispatcher, "Я запустился")
