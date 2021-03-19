@@ -13,7 +13,7 @@ async def on_startup(dispatcher):
         broadcaster, args=(dp, rasp), trigger='interval', hours=24,
         next_run_time=datetime.now().replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(hours=8)
     )
-    scheduler.add_job(get_rasp, args=(rasp, old_file_id, dp), trigger='interval', minutes=1, next_run_time=datetime.now())
+    scheduler.add_job(get_rasp, args=(rasp, old_file_id, dp), trigger='interval', hours=1, next_run_time=datetime.now())
     scheduler.start()
     # Уведомляет про запуск
     await notify_admins_def(dispatcher, "Я запустился")
