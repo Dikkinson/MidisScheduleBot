@@ -72,5 +72,5 @@ async def other_rasp_second_week(message: Message, state: FSMContext):
 @dp.message_handler(text="👨‍🎓 Вернуться к своему расписанию", state=User_form.other_group)
 @rate_limit(0.5)
 async def back_user_group(message: Message, state: FSMContext):
-    await User_form.user_group.set()
+    await User_form.default_state.set()
     await rasp_today(message, state)
