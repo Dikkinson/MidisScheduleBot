@@ -9,7 +9,7 @@ ADMINS = env.list("ADMINS")  # Тут у нас будет список из а�
 IP = env.str("ip")  # Тоже str, но для айпи адреса хоста
 
 mysql_info = {
-    'host':     'localhost',
+    'host':     'mysqlka',
     'user':     env.str("db_user"),
     'password': env.str("db_pass"),
     'db':       env.str("db"),
