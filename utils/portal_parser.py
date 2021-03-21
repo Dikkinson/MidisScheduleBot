@@ -11,8 +11,8 @@ async def get_rasp(rasp, old_file_id, dp):
     br.set_cookiejar(cj)
     br.open("https://portal.midis.info/")
     br.select_form('form[name="form_auth"]')
-    br['USER_LOGIN'] = 'cLYyKE'
-    br['USER_PASSWORD'] = 'c1v5MW'
+    br['USER_LOGIN'] = 'qPVSju'
+    br['USER_PASSWORD'] = 'LQSTK1'
     br.submit_selected()
     br.open("https://portal.midis.info/docs/timetable/path/Для%20очного%20отделения/")
     file_id = str(br.page).split('items: [{"id":"')[1].split('","name":"')[0]
