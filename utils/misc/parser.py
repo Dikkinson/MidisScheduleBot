@@ -11,10 +11,10 @@ class Parser:
         df = pd.read_excel(filename, sheet_name='TDSheet', header=None)
         df.columns = [f'col_{x}' for x in range(df.shape[1])]
         # откидываем колонки с днями недели и номерами пар
-        df.drop([f'col_{x}' for x in sorted(list(range(0, df.shape[1], 22)) + list(range(1, df.shape[1], 22)))],
-                inplace=True, axis=1)
+        # df.drop([f'col_{x}' for x in sorted(list(range(0, df.shape[1], 22)) + list(range(1, df.shape[1], 22)))],
+        #         inplace=True, axis=1)
         # Дропаем ненужные строки
-        df.drop([0, 1, 2, 36, 69, 102, 103], inplace=True)
+        df.drop([0, 1, 2], inplace=True)
         # сбрасываем индексацию строк
         df.reset_index(drop=True, inplace=True)
         # именуем колонки по новой
