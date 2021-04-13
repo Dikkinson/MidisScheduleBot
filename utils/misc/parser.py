@@ -13,6 +13,7 @@ class Parser:
         # откидываем колонки с днями недели и номерами пар
         # df.drop([f'col_{x}' for x in sorted(list(range(0, df.shape[1], 22)) + list(range(1, df.shape[1], 22)))],
         #         inplace=True, axis=1)
+        df.drop(['col_0', 'col_1'], inplace=True, axis=1)
         # Дропаем ненужные строки
         df.drop([0, 1, 2], inplace=True)
         # сбрасываем индексацию строк
@@ -21,9 +22,13 @@ class Parser:
         df.columns = [f'col_{x}' for x in range(df.shape[1])]
         # заменяем наны
         df.fillna('', inplace=True)
+        # заменяем хуйню
+        df.replace('<Ввести данные...>', '', inplace=True)
+        df.replace('<ауд>', 'ауд', inplace=True)
 
         # создание словаря с группами
         groups = [df.iloc[:, item:item + 4] for item in range(0, df.shape[1], 4)]
+        groups.pop(-1)
         self.rasp = dict()
         for group in groups:
             name = group.iloc[0, 0]
@@ -83,7 +88,6 @@ class Parser:
                 # берем отдельную пару
                 for num_para in range(0, day.shape[0], 2):
                     para = day.iloc[num_para:num_para + 2, :]
-
                     if para.iloc[0, 2]:
                         _num_para = emoji_list[int(num_para / 2)]
                         _time = para_time_saturday[int(num_para / 2)] if int(num_para / 2) == [5, 6] else para_time_alldays[int(num_para / 2)]
